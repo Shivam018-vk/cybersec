@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track Your Complaint - Cybersecurity of India</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      text-align: center;
+    }
+
+    header {
+      background-color: #003366;
+      color: white;
+      padding: 20px;
+    }
+
+    h1, h2 {
+      margin: 0;
+    }
+
+    main {
+      margin-top: 30px;
+    }
+
+    .track-complaint-container {
+      display: inline-block;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      font-size: 16px;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    input {
+      padding: 10px;
+      margin-bottom: 20px;
+      width: 300px;
+      font-size: 14px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .progress-container {
+      width: 100%;
+      background-color: #ddd;
+      border-radius: 5px;
+      margin-top: 20px;
+      display: none;
+    }
+
+    .progress-bar {
+      width: 0%;
+      height: 20px;
+      background-color: #007bff;
+      text-align: center;
+      line-height: 20px;
+      color: white;
+      border-radius: 5px;
+    }
+
+    #response-message {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #e7f7ff;
+      border: 1px solid #007bff;
+      border-radius: 4px;
+      color: #007bff;
+      display: none;
+    }
+
+    #home-button {
+      display: none;
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #home-button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Cybersecurity of India</h1>
+    <h2>Track Your Complaint</h2>
+  </header>
+
+  <main>
+    <div class="track-complaint-container">
+      <label for="complaint-number">Enter Complaint Number:</label>
+      <input type="text" id="complaint-number" placeholder="Enter 6-digit complaint number">
+      <button onclick="trackComplaint()">Track Complaint</button>
+
+      <div class="progress-container" id="progress-container">
+        <div class="progress-bar" id="progress-bar">0%</div>
+      </div>
+
+      <div id="response-message">
+        <p id="status"></p>
+      </div>
+
+      <button id="home-button" onclick="goHome()">Go to Home</button>
+    </div>
+  </main>
+
+  <footer>
+    <p>Cybersecurity of India &copy; 2025</p>
+  </footer>
+
+  <script>
+    const complaintData = {
+      "123456": "Your complaint is being investigated. Our team will reach out to you within 48 hours.",
+      "654321": "Your complaint has been resolved. Please check your email for further details.",
+      "112233": "Your complaint is under review. We will update you shortly."
+    };
+
+    function trackComplaint() {
+      const complaintNumber = document.getElementById('complaint-number').value.trim();
+      const progressBar = document.getElementById('progress-bar');
+      const progressContainer = document.getElementById('progress-container');
+      const responseMessage = document.getElementById('response-message');
+      const statusElement = document.getElementById('status');
+      const homeButton = document.getElementById('home-button');
+
+      if (!/^[0-9]{6}$/.test(complaintNumber)) {
+        alert("Please enter a valid 6-digit complaint number.");
+        return;
+      }
+
+      progressContainer.style.display = 'block';
+      let width = 0;
+      const interval = setInterval(() => {
+        if (width >= 100) {
+          clearInterval(interval);
+          if (complaintData[complaintNumber]) {
+            statusElement.textContent = complaintData[complaintNumber];
+          } else {
+            statusElement.textContent = "Sorry, we couldn't find your complaint. Please check the number and try again.";
+          }
+          responseMessage.style.display = 'block';
+          homeButton.style.display = 'block';  // Show the home button
+        } else {
+          width += 10;
+          progressBar.style.width = width + "%";
+          progressBar.textContent = width + "%";
+        }
+      }, 200);
+    }
+
+    function goHome() {
+      window.location.href = "index.html";  // Redirect to the home page
+    }
+  </script>
+</body>
+</html>

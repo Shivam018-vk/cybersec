@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybercrime Complaint Registration - India</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            /* background-color: #002538; */
+            background: rgb(60,52,201);
+            background: linear-gradient(90deg, rgba(60,52,201,1) 0%, rgba(255,253,253,1) 100%); 
+            color: #080707;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #f5f8fa;
+            /* background: rgb(60,52,201);
+            background: linear-gradient(90deg, rgba(60,52,201,1) 0%, rgba(255,253,253,1) 100%);  */
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #1a237e;
+        }
+
+        .header h1 {
+            color: #181717;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        .btn-submit {
+            background-color: #1a237e;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.1rem;
+            transition: background-color 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: #0d1757;
+        }
+
+        .error {
+            color: #d32f2f;
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        .success-message {
+            background-color: #4caf50;
+            color: white;
+            padding: 1rem;
+            border-radius: 4px;
+            margin-top: 1rem;
+            display: none;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Cybercrime Complaint Registration</h1>
+            <p>Report cyber incidents to help create a safer digital India</p>
+        </div>
+
+        <form id="cybercrimeForm">
+            <div class="form-group">
+                <label for="name">Full Name *</label>
+                <input type="text" id="name" name="name" required>
+                <div class="error" id="nameError">Please enter your full name</div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" name="email" required>
+                <div class="error" id="emailError">Please enter a valid email address</div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Mobile Number *</label>
+                <input type="tel" id="phone" name="phone" required>
+                <div class="error" id="phoneError">Please enter a valid 10-digit mobile number</div>
+            </div>
+
+            <div class="form-group">
+                <label for="incidentDate">Date of Incident *</label>
+                <input type="date" id="incidentDate" name="incidentDate" required>
+                <div class="error" id="dateError">Please select the incident date</div>
+            </div>
+
+            <div class="form-group">
+                <label for="crimeType">Type of Cybercrime *</label>
+                <select id="crimeType" name="crimeType" required>
+                    <option value="">Select crime type</option>
+                    <option value="phishing">Phishing</option>
+                    <option value="hacking">Hacking</option>
+                    <option value="fraud">Online Fraud</option>
+                    <option value="harassment">Cyber Harassment</option>
+                    <option value="stalking">Cyber Stalking</option>
+                    <option value="ransomware">Ransomware Attack</option>
+                    <option value="other">Other</option>
+                </select>
+                <div class="error" id="crimeTypeError">Please select the type of cybercrime</div>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Detailed Description of the Incident *</label>
+                <textarea id="description" name="description" required></textarea>
+                <div class="error" id="descriptionError">Please provide a detailed description</div>
+            </div>
+
+            <button type="submit" class="btn-submit">Submit Complaint</button>
+        </form>
+
+        <div class="success-message" id="successMessage">
+            Your complaint has been successfully registered. Redirecting to the tracking page...
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('cybercrimeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            document.querySelectorAll('.error').forEach(error => error.style.display = 'none');
+            let isValid = true;
+            
+            const name = document.getElementById('name').value.trim();
+            if (name.length < 3) {
+                document.getElementById('nameError').style.display = 'block';
+                isValid = false;
+            }
+            
+            const email = document.getElementById('email').value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                document.getElementById('emailError').style.display = 'block';
+                isValid = false;
+            }
+            
+            const phone = document.getElementById('phone').value.trim();
+            if (!/^[0-9]{10}$/.test(phone)) {
+                document.getElementById('phoneError').style.display = 'block';
+                isValid = false;
+            }
+            
+            if (isValid) {
+                document.getElementById('successMessage').style.display = 'block';
+                setTimeout(() => { window.location.href = 'track.html'; }, 2000);
+            }
+        });
+    </script>
+</body>
+</html>
